@@ -39,6 +39,7 @@ const interactions: UserFlowInteractionsFn = async (
 
   await toolbar.ensureLoginDone();
 
+  await toolbar.logout();
 
   return Promise.resolve();
 };

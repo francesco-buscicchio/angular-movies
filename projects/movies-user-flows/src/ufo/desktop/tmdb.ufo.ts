@@ -1,6 +1,5 @@
 import * as fixtures from '../../fixtures/tmdb.fixtures';
-import {Ufo, UserFlowContext} from '@push-based/user-flow';
-
+import { Ufo, UserFlowContext } from '@push-based/user-flow';
 
 export class TmdbUfo extends Ufo {
   constructor(private ctx: UserFlowContext) {
@@ -21,22 +20,14 @@ export class TmdbUfo extends Ufo {
 
     await this.page.waitForSelector(fixtures.TmdbLoginSubmitBtn);
     await this.page.click(fixtures.TmdbLoginSubmitBtn);
-    /*
-    * All logic from here on is hacky.
-    * It is only needed to make the test pass in CI and the real problem is unclear for now.
-    * The whole section needs a refactor. Sry :)
-    * */
-    await this.page.waitForTimeout(6000);
 
-    await this.page.waitForSelector(fixtures.TmdbLoginSubmitBtn);
-    await this.page.click(fixtures.TmdbLoginSubmitBtn);
-    await this.page.waitForTimeout(6000);
+    await this.page.waitForNavigation();
 
     // approve access
-    await this.page.waitForTimeout(6000);
-
-    await this.page.waitForSelector(fixtures.TmdbApproveBtn, {timeout: 60000});
+    await this.page.waitForSelector(fixtures.TmdbApproveBtn, {
+      timeout: 60000,
+    });
     await this.page.click(fixtures.TmdbApproveBtn);
+    await this.page.waitForNavigation();
   }
-
 }
